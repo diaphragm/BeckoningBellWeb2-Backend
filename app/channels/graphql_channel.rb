@@ -4,9 +4,9 @@ class GraphqlChannel < ApplicationCable::Channel
   end
 
   def execute(data)
-    query = data["query"]
-    variables = ensure_hash(data["variables"])
-    operation_name = data["operationName"]
+    query = data['query']
+    variables = ensure_hash(data['variables'])
+    operation_name = data['operationName']
     context = {
       # current_user: current_user,
       # Make sure the channel is in the context
@@ -35,7 +35,7 @@ class GraphqlChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    @subscription_ids.each { |sid|
+    @subscription_ids.each {|sid|
       CardsSchema.subscriptions.delete_subscription(sid)
     }
   end

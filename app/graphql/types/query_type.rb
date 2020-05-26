@@ -15,7 +15,6 @@ module Types
       Bell.available
     end
 
-
     field :dev, String, null: true
     def dev
       {object: @object, context: @context}.to_json
@@ -23,9 +22,9 @@ module Types
 
     # TODO: remove me
     field :test_field, String, null: false,
-      description: "An example field added by the generator"
+      description: 'An example field added by the generator'
     def test_field
-      "Hello World!"
+      'Hello World!'
     end
   end
 end

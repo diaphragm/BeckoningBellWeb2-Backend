@@ -4,11 +4,10 @@ AllCops:
   Exclude:
     - /**/db/**/*
     - /**/vendor/**/*
-    - /**/node_modules/**/*
-    - /**/lib/agora_dynamic_key/**/*
+    - /**/bin/**/*
 
 # auto fixで壊れるのでdisableにする
-SafeNavigationWithEmpty:
+Lint/SafeNavigationWithEmpty:
   Enabled: false
 
 # /が規定数以上のRegexpは%rを使えと言われるがどうでもいい
@@ -65,10 +64,6 @@ Style/TrailingCommaInArguments:
 Style/TernaryParentheses:
   Enabled: false
 
-# mailを&:で書くと違和感がすごいので
-Style/SymbolProc:
-  IgnoredMethods: 'mail'
-
 # selfあって困らんし読みやすいが強制するほどでもない
 Style/RedundantSelf:
   Enabled: false
@@ -86,10 +81,6 @@ Style/PercentLiteralDelimiters:
 # hoge == 0よりhoge.zero?の方が素晴らしいとは思わなんだ
 Style/NumericPredicate:
   Enabled: false
-
-# 5桁の数字が多いのでやや増やす
-Style/NumericLiterals:
-  MinDigits: 6
 
 # nextは事実上の限定されたgotoであり、積極的に推奨する理由はない
 Style/Next:
@@ -155,30 +146,16 @@ Naming/AccessorMethodName:
 
 # 行あたり文字数
 # 努力目標としては120程度が望ましい
-Metrics/LineLength:
+Layout/LineLength:
   Max: 160
   AllowHeredoc: true
-  Exclude:
-    # 必要な長大文字列リテラルが多い
-    - 'engines/follow_up_client/test/models/message_test.rb'
 
 Metrics/MethodLength:
   Max: 124
-  Exclude:
-    - engines/follow_up_client/lib/follow_up_client/account_method_decorator.rb
-
-Metrics/ClassLength:
-  Exclude:
-    - engines/follow_up_client/app/models/follow_up_client/client.rb
 
 # クラス変数。基本使うなだけど簡易Cacheとかには便利
 Style/ClassVars:
   Enabled: false
-
-# 0.55時点でHeredocによる誤作動なので将来バージョンでは直る筈
-Layout/EmptyLinesAroundArguments:
-  Exclude:
-    - 'engines/follow_up_client/app/models/follow_up_client/auto_follow_up_modules/kinoshita_no_chintai/ver1.rb'
 
 # 日時formatに誤爆する。信用できない
 Style/FormatStringToken:
@@ -196,11 +173,41 @@ Style/IdenticalConditionalBranches:
 Layout/FirstHashElementIndentation:
   Enabled: false
 
+# 気持ち悪い
+Layout/SpaceBeforeBlockBraces:
+  EnforcedStyle: no_space
+
+# 気持ち悪い
+Layout/SpaceInsideBlockBraces:
+  SpaceBeforeBlockParameters: false
+
+# auto correctで壊される
+Layout/HashAlignment:
+  Enabled: false
+
 # 厳しすぎ
 Metrics/AbcSize:
   Max: 18
 
-# v0.8.1対応
+# error handlingでe使う
+Naming/MethodParameterName:
+  AllowedNames:
+  # default
+    - io
+    - id
+    - to
+    - by
+    - on
+    - in
+    - at
+    - ip
+    - db
+    - os
+    - pp
+  # custom
+    - e
+
+# v0.8対応
 Lint/RaiseException:
   Enabled: true
 Lint/StructNewOverride:
@@ -214,4 +221,10 @@ Style/HashTransformValues:
 Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 Style/ExponentialNotation:
+  Enabled: true
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+Style/SlicingWithRange:
   Enabled: true

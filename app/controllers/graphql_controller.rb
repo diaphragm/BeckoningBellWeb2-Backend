@@ -14,7 +14,7 @@ class GraphqlController < ApplicationController
     }
     result = BeckoningBellWebSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
-  rescue => e
+  rescue StandardError => e
     raise e unless Rails.env.development?
     handle_error_in_development e
   end
@@ -35,7 +35,7 @@ class GraphqlController < ApplicationController
     when nil
       {}
     else
-      raise ArgumentError, "Unexpected parameter: #{ambiguous_param}"
+      raise ArgumentError.new("Unexpected parameter: #{ambiguous_param}")
     end
   end
 
@@ -43,6 +43,6 @@ class GraphqlController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
 
-    render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+    render json: {errors: [{message: e.message, backtrace: e.backtrace}], data: {}}, status: 500
   end
 end
