@@ -17,6 +17,11 @@ module Mutations
     def resolve(**args)
       bell = Bell.available.find(args[:bell_id])
       message = bell.messages.create(args)
+      BeckoningBellWebSchema.subscriptions.trigger(
+        'new_message',
+        {bell_id: bell.id},
+        message
+      )
       {
         message: message
       }

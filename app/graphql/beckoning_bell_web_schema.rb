@@ -8,4 +8,7 @@ class BeckoningBellWebSchema < GraphQL::Schema
 
   # Add built-in connections for pagination
   use GraphQL::Pagination::Connections
+
+  subscription(Types::SubscriptionType)
+  use GraphQL::Subscriptions::ActionCableSubscriptions
 end
